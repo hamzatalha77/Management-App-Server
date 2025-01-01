@@ -13,3 +13,10 @@ const isProduction = process.env.NODE_ENV === 'production'
 if (isProduction) {
   dynamoose.aws.ddb.local()
 }
+
+const app = express()
+app.use(express.json())
+app.use(helmet())
+app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }))
+app.use(morgan('common'))
+app.use(bodyParser.json())
