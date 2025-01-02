@@ -22,3 +22,14 @@ app.use(morgan('common'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cors())
+
+app.get('/', (req, res) => {
+  res.send('hello world')
+})
+
+const port = process.env.PORT || 3000
+if (!isProduction) {
+  app.listen(port, () => {
+    console.log(`Server running on port ${port}`)
+  })
+}
