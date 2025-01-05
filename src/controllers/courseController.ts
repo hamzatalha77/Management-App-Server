@@ -6,5 +6,6 @@ export const ListCourses = async (
 ): Promise<void> => {
   const { category } = req.query
   try {
+    const courses = category && category !== 'all'
   } catch (error) {}
 }
