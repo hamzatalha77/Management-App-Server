@@ -12,5 +12,7 @@ export const ListCourses = async (
         ? await Course.scan('category').eq(category).exec()
         : await Course.scan().exec()
     res.json({ message: 'Courses retrieved successfully', data: courses })
-  } catch (error) {}
+  } catch (error) {
+    res.json({ message: 'Courses retrieved successfully', error })
+  }
 }
