@@ -7,7 +7,10 @@ export const ListCourses = async (
 ): Promise<void> => {
   const { category } = req.query
   try {
-    const courses = category && category !== 'all'
-    ? await Course.scan('category').eq(category).exec()
+    const courses =
+      category && category !== 'all'
+        ? await Course.scan('category').eq(category).exec()
+        : await Course.scan().exec()
+    res.json({ message: 'Courses retrieved successfully', data: courses })
   } catch (error) {}
 }
