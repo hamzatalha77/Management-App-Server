@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import Course from '../models/courseModel'
 
-export const ListCourses = async (
+export const listCourses = async (
   req: Request,
   res: Response
 ): Promise<void> => {
