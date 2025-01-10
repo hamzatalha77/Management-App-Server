@@ -26,7 +26,7 @@ app.use(cors())
 app.get('/', (req, res) => {
   res.send('hello world')
 })
-
+app.use('/courses', course)
 const port = process.env.PORT || 3000
 if (!isProduction) {
   app.listen(port, () => {
