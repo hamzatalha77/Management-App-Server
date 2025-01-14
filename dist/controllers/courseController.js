@@ -32,13 +32,13 @@ const getCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const course = yield courseModel_1.default.get(courseId);
         if (!course) {
-            res.status(404).json({ message: 'Courses not found' });
+            res.status(404).json({ message: 'Course not found' });
             return;
         }
-        res.json({ message: 'Courses retrieved successfully', data: course });
+        res.json({ message: 'Course retrieved successfully', data: course });
     }
     catch (error) {
-        res.status(500).json({ message: 'Error retrieving courses', error });
+        res.status(500).json({ message: 'Error retrieving course', error });
     }
 });
 exports.getCourse = getCourse;
