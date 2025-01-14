@@ -20,7 +20,7 @@ export const getCourse = async (req: Request, res: Response): Promise<void> => {
   const { courseId } = req.params
   try {
     const course = await Course.get(courseId)
-    if (course) {
+    if (!course) {
       res.status(404).json({ message: 'Courses not found' })
       return
     }

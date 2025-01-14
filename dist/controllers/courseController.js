@@ -31,7 +31,7 @@ const getCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { courseId } = req.params;
     try {
         const course = yield courseModel_1.default.get(courseId);
-        if (course) {
+        if (!course) {
             res.status(404).json({ message: 'Courses not found' });
             return;
         }
