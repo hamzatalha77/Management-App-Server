@@ -6,10 +6,9 @@ import helmet from 'helmet'
 import morgan from 'morgan'
 import * as dynamoose from 'dynamoose'
 import courseRoutes from './routes/courseRoutes'
+
 dotenv.config()
-
 const isProduction = process.env.NODE_ENV === 'production'
-
 if (isProduction) {
   dynamoose.aws.ddb.local()
 }
