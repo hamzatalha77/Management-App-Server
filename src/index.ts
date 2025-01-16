@@ -9,7 +9,7 @@ import courseRoutes from './routes/courseRoutes'
 
 dotenv.config()
 const isProduction = process.env.NODE_ENV === 'production'
-if (isProduction) {
+if (!isProduction) {
   dynamoose.aws.ddb.local()
 }
 
@@ -26,6 +26,7 @@ app.get('/', (req, res) => {
   res.send('hello world')
 })
 app.use('/courses', courseRoutes)
+
 const port = process.env.PORT || 3000
 if (!isProduction) {
   app.listen(port, () => {

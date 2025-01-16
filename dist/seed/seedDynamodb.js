@@ -25,27 +25,27 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 let client;
 /* DynamoDB Configuration */
-const isProduction = process.env.NODE_ENV === "production";
+const isProduction = process.env.NODE_ENV === 'production';
 if (!isProduction) {
     dynamoose_1.default.aws.ddb.local();
     client = new client_dynamodb_1.DynamoDBClient({
-        endpoint: "http://localhost:8000",
-        region: "us-east-2",
+        endpoint: 'http://localhost:8000',
+        region: 'us-east-2',
         credentials: {
-            accessKeyId: "dummyKey123",
-            secretAccessKey: "dummyKey123",
-        },
+            accessKeyId: 'dummyKey123',
+            secretAccessKey: 'dummyKey123'
+        }
     });
 }
 else {
     client = new client_dynamodb_1.DynamoDBClient({
-        region: process.env.AWS_REGION || "us-east-2",
+        region: process.env.AWS_REGION || 'us-east-2'
     });
 }
 /* DynamoDB Suppress Tag Warnings */
 const originalWarn = console.warn.bind(console);
 console.warn = (message, ...args) => {
-    if (!message.includes("Tagging is not currently supported in DynamoDB Local")) {
+    if (!message.includes('Tagging is not currently supported in DynamoDB Local')) {
         originalWarn(message, ...args);
     }
 };
@@ -58,7 +58,7 @@ function createTables() {
                 create: true,
                 update: true,
                 waitForActive: true,
-                throughput: { read: 5, write: 5 },
+                throughput: { read: 5, write: 5 }
             });
             try {
                 yield new Promise((resolve) => setTimeout(resolve, 2000));
@@ -73,7 +73,7 @@ function createTables() {
 }
 function seedData(tableName, filePath) {
     return __awaiter(this, void 0, void 0, function* () {
-        const data = JSON.parse(fs_1.default.readFileSync(filePath, "utf8"));
+        const data = JSON.parse(fs_1.default.readFileSync(filePath, 'utf8'));
         const formattedTableName = pluralize_1.default.singular(tableName.charAt(0).toUpperCase() + tableName.slice(1));
         console.log(`Seeding data to table: ${formattedTableName}`);
         for (const item of data) {
@@ -84,7 +84,7 @@ function seedData(tableName, filePath) {
                 console.error(`Unable to add item to ${formattedTableName}. Error:`, JSON.stringify(err, null, 2));
             }
         }
-        console.log("\x1b[32m%s\x1b[0m", `Successfully seeded data to table: ${formattedTableName}`);
+        console.log('\x1b[32m%s\x1b[0m', `Successfully seeded data to table: ${formattedTableName}`);
     });
 }
 function deleteTable(baseTableName) {
@@ -95,7 +95,7 @@ function deleteTable(baseTableName) {
             console.log(`Table deleted: ${baseTableName}`);
         }
         catch (err) {
-            if (err.name === "ResourceNotFoundException") {
+            if (err.name === 'ResourceNotFoundException') {
                 console.log(`Table does not exist: ${baseTableName}`);
             }
             else {
@@ -121,12 +121,12 @@ function seed() {
         yield deleteAllTables();
         yield new Promise((resolve) => setTimeout(resolve, 1000));
         yield createTables();
-        const seedDataPath = path_1.default.join(__dirname, "./data");
+        const seedDataPath = path_1.default.join(__dirname, './data');
         const files = fs_1.default
             .readdirSync(seedDataPath)
-            .filter((file) => file.endsWith(".json"));
+            .filter((file) => file.endsWith('.json'));
         for (const file of files) {
-            const tableName = path_1.default.basename(file, ".json");
+            const tableName = path_1.default.basename(file, '.json');
             const filePath = path_1.default.join(seedDataPath, file);
             yield seedData(tableName, filePath);
         }
@@ -134,6 +134,6 @@ function seed() {
 }
 if (require.main === module) {
     seed().catch((error) => {
-        console.error("Failed to run seed script:", error);
+        console.error('Failed to run seed script:', error);
     });
 }
