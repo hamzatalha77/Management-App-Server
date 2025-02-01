@@ -14,6 +14,6 @@ export const getCourse = async (req: Request, res: Response): Promise<void> => {
 
     res.json({ message: 'User updated successfully' })
   } catch (error) {
-    res.status(500).json({ message: 'Error updating user', error })
+    res.status(500).json({ message: 'Error updating users', error })
   }
 }
