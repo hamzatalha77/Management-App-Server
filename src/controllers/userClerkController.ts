@@ -1,7 +1,10 @@
 import { Request, Response } from 'express'
 import { clerkClient } from '../index'
 
-export const getCourse = async (req: Request, res: Response): Promise<void> => {
+export const userUpdate = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const { userId } = req.params
   const userData = req.body
   try {
