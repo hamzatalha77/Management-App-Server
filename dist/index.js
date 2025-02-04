@@ -36,6 +36,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.clerkClient = void 0;
 const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const body_parser_1 = __importDefault(require("body-parser"));
@@ -44,11 +45,16 @@ const helmet_1 = __importDefault(require("helmet"));
 const morgan_1 = __importDefault(require("morgan"));
 const dynamoose = __importStar(require("dynamoose"));
 const courseRoutes_1 = __importDefault(require("./routes/courseRoutes"));
+const userClerkRoutes_1 = __importDefault(require("./routes/userClerkRoutes"));
+const express_2 = require("@clerk/express");
 dotenv_1.default.config();
 const isProduction = process.env.NODE_ENV === 'production';
 if (!isProduction) {
     dynamoose.aws.ddb.local();
 }
+exports.clerkClient = (0, express_2.createClerkClient)({
+    secretKey: process.env.CLERK_SECRET_KEY
+});
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, helmet_1.default)());
@@ -61,6 +67,7 @@ app.get('/', (req, res) => {
     res.send('hello world');
 });
 app.use('/courses', courseRoutes_1.default);
+app.use('/users/clerk', userClerkRoutes_1.default);
 const port = process.env.PORT || 3000;
 if (!isProduction) {
     app.listen(port, () => {
