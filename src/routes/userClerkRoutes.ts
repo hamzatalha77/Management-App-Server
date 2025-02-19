@@ -1,7 +1,8 @@
 import express from 'express'
-import { userUpdate } from '../controllers/userClerkController'
+import { updateUser } from '../controllers/userClerkController'
 
 const router = express.Router()
-router.get('/:userId', userUpdate)
+
+router.put('/:userId', updateUser)
 
 export default router

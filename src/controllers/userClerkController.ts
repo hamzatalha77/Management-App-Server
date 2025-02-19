@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { clerkClient } from '../index'
 
-export const userUpdate = async (
+export const updateUser = async (
   req: Request,
   res: Response
 ): Promise<void> => {
@@ -11,7 +11,7 @@ export const userUpdate = async (
     const user = await clerkClient.users.updateUserMetadata(userId, {
       publicMetadata: {
         userType: userData.publicMetadata.userType,
-        settings: userData.publicMetadata.userType
+        settings: userData.publicMetadata.settings
       }
     })
 
