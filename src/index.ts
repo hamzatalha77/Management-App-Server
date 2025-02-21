@@ -7,7 +7,7 @@ import morgan from 'morgan'
 import * as dynamoose from 'dynamoose'
 import courseRoutes from './routes/courseRoutes'
 import userClerckRoutes from './routes/userClerkRoutes'
-import { createClerkClient } from '@clerk/express'
+import { clerkMiddleware, createClerkClient } from '@clerk/express'
 
 dotenv.config()
 const isProduction = process.env.NODE_ENV === 'production'
@@ -27,6 +27,7 @@ app.use(morgan('common'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cors())
+app.use(clerkMiddleware())
 
 app.get('/', (req, res) => {
   res.send('hello world')
