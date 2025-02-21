@@ -7,7 +7,7 @@ import morgan from 'morgan'
 import * as dynamoose from 'dynamoose'
 import courseRoutes from './routes/courseRoutes'
 import userClerckRoutes from './routes/userClerkRoutes'
-import { clerkMiddleware, createClerkClient } from '@clerk/express'
+import { clerkMiddleware, createClerkClient, requireAuth } from '@clerk/express'
 
 dotenv.config()
 const isProduction = process.env.NODE_ENV === 'production'
@@ -33,7 +33,7 @@ app.get('/', (req, res) => {
   res.send('hello world')
 })
 app.use('/courses', courseRoutes)
-app.use('/users/clerk', userClerckRoutes)
+app.use('/users/clerk', requireAuth(), userClerckRoutes)
 
 const port = process.env.PORT || 3000
 if (!isProduction) {

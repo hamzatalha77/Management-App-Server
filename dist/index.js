@@ -68,7 +68,7 @@ app.get('/', (req, res) => {
     res.send('hello world');
 });
 app.use('/courses', courseRoutes_1.default);
-app.use('/users/clerk', userClerkRoutes_1.default);
+app.use('/users/clerk', (0, express_2.requireAuth)(), userClerkRoutes_1.default);
 const port = process.env.PORT || 3000;
 if (!isProduction) {
     app.listen(port, () => {
