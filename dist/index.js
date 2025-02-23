@@ -53,7 +53,7 @@ if (!isProduction) {
     dynamoose.aws.ddb.local();
 }
 exports.clerkClient = (0, express_2.createClerkClient)({
-    secretKey: process.env.CLERK_SECRET_KEY
+    secretKey: process.env.CLERK_PUBLISHABLE_KEY
 });
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
